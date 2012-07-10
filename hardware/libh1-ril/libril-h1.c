@@ -215,6 +215,31 @@ int ipcFixSMS()
     return ipc_send_data( data, sizeof(data), PDA_TO_MODEM);
 }
 
+int SaveDate()
+{
+
+    LOGD("Save Date.");
+
+    time_t now;
+    time(&now);
+    struct tm * tmutc;
+    tmutc = gmtime(&now);
+    LOGD("gmtime: %d, %d, %d, %d, %d, %d ", tmutc->tm_year-100, tmutc->tm_mon+1,tmutc->tm_mday,tmutc->tm_hour,tmutc->tm_min,tmutc->tm_sec);
+    tmutc = localtime(&now);
+    LOGD("localtime: %d, %d, %d, %d, %d, %d ", tmutc->tm_year-100, tmutc->tm_mon+1,tmutc->tm_mday,tmutc->tm_hour,tmutc->tm_min,tmutc->tm_sec);
+
+    unsigned char data[]={0x18, 0x00, 0x02, 0xff, 0x0a, 0x07, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00,0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+
+    data[14]=tmutc->tm_sec;
+    data[13]=tmutc->tm_min;
+    data[12]=tmutc->tm_hour;
+    data[11]=tmutc->tm_mday;
+    data[10]=tmutc->tm_mon+1;
+    data[9]=tmutc->tm_year-100;
+
+    return ipc_send_data( data, sizeof(data), PDA_TO_MODEM);
+}
+
 static void requestSMSAcknowledge(void *data, size_t datalen, RIL_Token t)
 {
     int ackSuccess = ((int *)data)[0];
@@ -279,12 +304,19 @@ void onRequest (int request, void *data, size_t datalen, RIL_Token t)
             break;
 
         case RIL_REQUEST_RADIO_POWER:
-            if(g3GFixEnable)
             {
-                //set trigger, its called when libsec-ril finshes the request
                 int onOff = ((int *)data)[0];
-                if(onOff==1)
-                    installOnReqCompleteTrigger( t, ipcFix3G, "ipcFix3G");
+                if(g3GFixEnable)
+                {
+                    //set trigger, its called when libsec-ril finshes the request
+                    if(onOff==1)
+                        installOnReqCompleteTrigger( t, ipcFix3G, "ipcFix3G");
+                }
+            
+                if(onOff==0)
+                {
+                    SaveDate();
+                }
             }
             break;
     }
