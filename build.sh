@@ -15,6 +15,8 @@ function build_kernel()
 	cd kernel
 	make omap_nowplus_defconfig
 	make -j4
+	export KDIR=`pwd`
+	make -C ./modules
 }
 
 function build_android()
