@@ -1,7 +1,7 @@
-diff --git tools/hciattach.c tools/hciattach.c
+diff --git a/tools/hciattach.c b/tools/hciattach.c
 index cb67e52..14de253 100644
---- tools/hciattach.c
-+++ tools/hciattach.c
+--- a/tools/hciattach.c
++++ b/tools/hciattach.c
 @@ -1127,7 +1127,8 @@ struct uart_t uart[] = {
  	{ "swave",      0x0000, 0x0000, HCI_UART_H4,   115200, 115200, FLOW_CTL, NULL, swave    },
  
