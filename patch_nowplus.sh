@@ -3,3 +3,4 @@ patch -p1 -d ./external/bluetooth/bluez  <./device/samsung/nowplus/patch/externa
 patch -p1 -d ./system/core/  <./device/samsung/nowplus/patch/system_core.diff
 patch -p1 -d ./frameworks/base/  <./device/samsung/nowplus/patch/frameworks_base_media_libstagefright.diff
 patch -p1 -d ./packages/apps/Gallery3D  <./device/samsung/nowplus/patch/packages_apps_Gallery3D.diff
+mv ./vendor/cyanogen/products/AndroidProducts.mk ./vendor/cyanogen/products/AndroidProducts.mk.off
