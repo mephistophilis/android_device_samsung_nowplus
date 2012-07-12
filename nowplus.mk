@@ -177,6 +177,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,device/samsung/nowplus/prebuilt/modules,system/lib/modules)
 
+TARGET_PREBUILT_KERNEL := kernel/arch/arm/boot/zImage
+
+ifneq ($(TARGET_PREBUILT_KERNEL),)
+	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+	PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel
+endif
+
+	
 # Generated kcm keymaps
 PRODUCT_PACKAGES += \
         TWL4030_Keypad.kcm\
