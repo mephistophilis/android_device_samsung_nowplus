@@ -95,7 +95,6 @@ PRODUCT_COPY_FILES +=  \
    
 # root/
 PRODUCT_COPY_FILES += \
-    device/samsung/nowplus/init.rc:root/init.rc \
     device/samsung/nowplus/init.samsung.rc:root/init.samsung.rc \
     device/samsung/nowplus/ueventd.samsung.rc:root/ueventd.samsung.rc
 
