@@ -62,34 +62,15 @@ int device_handle_key(int key_code, int visible) {
             case KEY_VOLUMEUP:
                 return HIGHLIGHT_UP;
 
-            case KEY_POWER:
-                if (ui_get_showing_back_button()) {
-                    return SELECT_ITEM;
-                }
-                if (!get_allow_toggle_display())
-                    return GO_BACK;
-                break;
             case KEY_PHONE:
-            case KEY_LEFTBRACE:
-            case KEY_ENTER:
-            case BTN_MOUSE:
-            case KEY_CENTER:
-            case KEY_CAMERA:
-            case KEY_F21:
-            case KEY_SEND:
                 return SELECT_ITEM;
             
             case KEY_EXIT:
-            case KEY_END:
-            case KEY_BACKSPACE:
             case KEY_SEARCH:
-                if (ui_get_showing_back_button()) {
+                if (ui_get_showing_back_button())
                     return SELECT_ITEM;
-                }
                 if (!get_allow_toggle_display())
                     return GO_BACK;
-            case KEY_BACK:
-                return GO_BACK;
         }
     }
 

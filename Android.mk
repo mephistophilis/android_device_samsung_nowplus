@@ -18,11 +18,6 @@ LOCAL_PATH := $(call my-dir)
 ifeq ($(TARGET_DEVICE),nowplus)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := gpio-keys.kcm
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_KEY_CHAR_MAP)
-
-include $(CLEAR_VARS)
 LOCAL_SRC_FILES := TWL4030_Keypad.kcm
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_KEY_CHAR_MAP)

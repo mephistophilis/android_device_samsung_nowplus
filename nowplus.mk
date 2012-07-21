@@ -135,8 +135,9 @@ PRODUCT_COPY_FILES += \
     device/samsung/nowplus/prebuilt/etc/wifi/nvs_map.bin:system/etc/wifi/nvs_map.bin \
     device/samsung/nowplus/prebuilt/etc/wifi/tiwlan_drv.ko:system/etc/wifi/tiwlan_drv.ko \
     device/samsung/nowplus/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    device/samsung/nowplus/prebuilt/etc/wifi/tiwlan.ini:system/etc/wifi/tiwlan.ini
-
+    device/samsung/nowplus/prebuilt/etc/wifi/tiwlan.ini:system/etc/wifi/tiwlan.ini \
+    device/samsung/nowplus/prebuilt/etc/wifi/softap/tiap_drv.ko:system/etc/wifi/softap/tiap_drv.ko \
+    device/samsung/nowplus/prebuilt/etc/wifi/softap/firmware_ap.bin:system/etc/wifi/softap/firmware_ap.bin
 
 # system/media/
 #PRODUCT_COPY_FILES += \
@@ -158,12 +159,12 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml
 
-
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
     device/samsung/nowplus/TWL4030_Keypad.kl:system/usr/keylayout/TWL4030_Keypad.kl \
-    device/samsung/nowplus/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
-   
+    device/samsung/nowplus/ear_key_driver.kl:system/usr/keylayout/ear_key_driver.kl \
+    device/samsung/nowplus/power_key_driver.kl:system/usr/keylayout/power_key_driver.kl
+
 # 3G
 PRODUCT_COPY_FILES += \
     device/samsung/nowplus/prebuilt/efs/param.bin:efs/param.bin \
@@ -187,8 +188,7 @@ endif
 	
 # Generated kcm keymaps
 PRODUCT_PACKAGES += \
-        TWL4030_Keypad.kcm\
-        gpio-keys.kcm
+        TWL4030_Keypad.kcm
 # Pick up audio package
 #include frameworks/base/data/sounds/AudioPackage2.mk
 

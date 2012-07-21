@@ -116,7 +116,7 @@ loglevel 3
 
 # Enabling Power Management features
     # Enabling system for Hitting Retention
-    #write /debug/pm_debug/sleep_while_idle 1
+    write /debug/pm_debug/sleep_while_idle 1
     # Enabling system for Hitting OFF
     write /debug/pm_debug/enable_off_mode 1
     write /debug/pm_debug/voltage_off_while_idle 1
@@ -136,25 +136,25 @@ loglevel 3
 on fs
     # mount onenand mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
-    mount yaffs2 mtd@system /system
-    mount yaffs2 mtd@system /system ro remount noatime nodiratime
+    mount yaffs2 mtd@system /system noatime nodiratime
     mount yaffs2 mtd@userdata /data nosuid nodev noatime nodiratime
     mount yaffs2 mtd@cache /cache nosuid nodev noatime nodiratime
 
     
-# load kernel modules
-    insmod /system/lib/modules/camera_pmic.ko
-    insmod /system/lib/modules/camera.ko
+# load camera modules
+    insmod /system/lib/modules/cam_pmic.ko
     insmod /system/lib/modules/main_sensor.ko
     insmod /system/lib/modules/vt_sensor.ko
-    
+
+# additional kernel modules
     insmod /system/lib/modules/param.ko
     insmod /system/lib/modules/dpram.ko
     insmod /system/lib/modules/kxsd9.ko
     insmod /system/lib/modules/vibrator.ko
     insmod /system/lib/modules/pl_sensor.ko
     insmod /system/lib/modules/Si4709_driver.ko
-	insmod /system/lib/modules/multipdp.ko
+    insmod /system/lib/modules/multipdp.ko
+
 
 on post-fs
     mount rootfs rootfs / rw remount
@@ -604,17 +604,6 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/mi
          disabled
          oneshot
 
-service wlan_ap_loader /system/bin/tiap_loader \
-        -f /system/etc/wifi/softap/firmware_ap.bin \
-        -i /system/etc/wifi/softap/tiwlan_ap.ini \
-        -e /system/etc/wifi/nvs_map.bin
-        disabled
-        oneshot
-
-service hostapd /system/bin/hostap -B -P /data/misc/wifi/hostapd_pid.pid -dd /data/misc/wifi/hostapd.conf
-        disabled
-        oneshot
-
 service dhcpcd_tiwlan0 /system/bin/dhcpcd -ABKL -d tiwlan0
          disabled
          oneshot
@@ -622,6 +611,19 @@ service dhcpcd_tiwlan0 /system/bin/dhcpcd -ABKL -d tiwlan0
 service iprenew_tiwlan0 /system/bin/dhcpcd -n
         disabled
         oneshot
+
+# TI WLAN Soft AP related services and configuration
+service wlan_ap_loader /system/bin/tiap_loader \
+        -f /system/etc/wifi/softap/firmware_ap.bin \
+        -i /system/etc/wifi/softap/tiwlan_ap.ini \
+        -e /system/etc/wifi/nvs_map.bin
+        disabled
+        oneshot
+
+service hostapd /system/bin/hostap -dd /data/misc/wifi/hostapd.conf
+        disabled
+        oneshot
+
 
 # OMAP specific services start here
 
@@ -637,8 +639,8 @@ service hciattach /system/bin/hciattach -n /dev/ttyS1 texas 3000000
     group bluetooth net_bt_admin misc
     disabled
     oneshot
-    
+
 #run custom init script
-service sysinit /system/bin/logwrapper /system/xbin/run-parts /system/etc/init.d 
+service sysinit /system/bin/logwrapper /system/xbin/run-parts /system/etc/init.d
 	disabled
 	oneshot

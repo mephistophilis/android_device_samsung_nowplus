@@ -36,7 +36,9 @@ function build_android()
 	lunch nowplus-eng  
 	make -j4
 	check_imgdir
-	cp -raf ./out/target/product/nowplus/system ./image/system
+	rm -rf ./image/system
+	cp -raf ./out/target/product/nowplus/system ./image/
+	find ./kernel/ -name "*.ko" | xargs -I {} cp {} ./image/system/lib/modules/
 }
 
 function make_boot()
@@ -89,12 +91,21 @@ function build_rootfs()
 	cp ./kernel/arch/arm/boot/uImage ./image/boot.img
 }
 
+function clean()
+{
+  rm -rf ./out/target/product/nowplus/*.img
+  rm -rf ./out/target/product/nowplus/root
+  rm -rf ./out/target/product/nowplus/system
+  rm -rf ./out/target/product/nowplus/recovery
+}
 
 function usage()
 {
 	echo "./build.sh [ARGS] (uboot, kernel, android, all)."
 	exit 0
 }
+
+
 
 if [ $# -ne 1 ]
 then
@@ -117,6 +128,9 @@ case "$1" in
 		;;
 	"rootfs")
 		build_rootfs
+		;;
+	"clean")
+		clean
 		;;
 	"all")
 		build_uboot

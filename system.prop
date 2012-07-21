@@ -43,13 +43,12 @@ dalvik.vm.dexopt-flags=m=y
 dalvik.vm.execution-mode=int:jit
 dalvik.vm.dexopt-data-only=1
 
-android.keylayout.gpio-keys = /system/usr/keylayout/gpio-keys.kl
-android.keychar.gpio-keys = /system/usr/keychars/gpio-keys.kcm
-android.keylayout.TWL4030_Keypad = /system/usr/keylayout/TWL4030_Keypad.kl
-android.keychar.TWL4030_Keypad = /system/usr/keychars/TWL4030_Keypad.kcm
-
 wifi.interface=tiwlan0
 wifi.supplicant_scan_interval=180
+
+wifi.hotspot.ti = 1
+wifi.ap.interface = tiap0
+softap.interface = tiap0
 
 alsa.mixer.playback.master=DAC2 Analog
 alsa.mixer.capture.master=Analog
@@ -69,4 +68,4 @@ ro.opengles.version=131072
 light.battery.show=0
 
 #enable overlay transparency hack, disable it if there are video playback problems
-overlay.transparency.enable=1
+overlay.transparency.enable=0
