@@ -272,7 +272,7 @@ on post-fs
    
    # once everything is setup, no need to modify /
     mount rootfs rootfs / ro remount
-    mount rootfs rootfs / ro remount
+    mount yaffs2 mtd@system /system ro remount
     
 on boot
 # basic network init

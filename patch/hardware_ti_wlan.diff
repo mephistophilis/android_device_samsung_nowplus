@@ -1,0 +1,82 @@
+diff --git a/wl1271/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c b/wl1271/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
+index 13e6916..080fe1f 100644
+--- a/wl1271/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
++++ b/wl1271/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
+@@ -49,7 +49,7 @@
+ #include <plat/clock.h>
+ #include <plat/dma.h>
+ #include <plat/io.h>
+-#include <plat/resource.h>
++//#include <plat/resource.h>
+ #define IO_ADDRESS(pa)	OMAP2_L4_IO_ADDRESS(pa)
+ #else
+ #include <mach/hardware.h>
+diff --git a/wl1271/platforms/hw/host_platform_zoom2/linux/host_platform.h b/wl1271/platforms/hw/host_platform_zoom2/linux/host_platform.h
+index 482797c..52a0e97 100644
+--- a/wl1271/platforms/hw/host_platform_zoom2/linux/host_platform.h
++++ b/wl1271/platforms/hw/host_platform_zoom2/linux/host_platform.h
+@@ -59,8 +59,8 @@
+ 
+ 
+ 
+-#define PMENA_GPIO                      101
+-#define IRQ_GPIO                        162
++#define PMENA_GPIO                      160 
++#define IRQ_GPIO                        21
+ 
+ #define MUXMODE_3                       3
+ #define TNETW_IRQ                       (OMAP_GPIO_IRQ(IRQ_GPIO))
+diff --git a/wl1271/stad/build/linux/common.inc b/wl1271/stad/build/linux/common.inc
+index d355e77..c273953 100644
+--- a/wl1271/stad/build/linux/common.inc
++++ b/wl1271/stad/build/linux/common.inc
+@@ -186,7 +186,7 @@ endif
+ ##
+ ##
+ 
+-EXTRA_CFLAGS += -fsigned-char -Werror
++EXTRA_CFLAGS += -fsigned-char 
+ EXTRA_CFLAGS += -D __LINUX__ -DTI_RANDOM_DEFAULT_MAC
+ EXTRA_CFLAGS += $(DK_DEFINES)
+ EXTRA_CFLAGS += $(PFORM_DEFINES)
+diff --git a/wl1271_softAP/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c b/wl1271_softAP/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
+index 390a6fa..796b8fa 100644
+--- a/wl1271_softAP/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
++++ b/wl1271_softAP/external_drivers/zoom2/Linux/proprietary_sdio/SdioDrv.c
+@@ -49,7 +49,7 @@
+ #include <plat/clock.h>
+ #include <plat/dma.h>
+ #include <plat/io.h>
+-#include <plat/resource.h>
++//#include <plat/resource.h>
+ #define IO_ADDRESS(pa)	OMAP2_L4_IO_ADDRESS(pa)
+ #else
+ #include <mach/hardware.h>
+diff --git a/wl1271_softAP/platforms/hw/host_platform_zoom2/linux/host_platform.h b/wl1271_softAP/platforms/hw/host_platform_zoom2/linux/host_platform.h
+index ab6fea1..bdcecab 100644
+--- a/wl1271_softAP/platforms/hw/host_platform_zoom2/linux/host_platform.h
++++ b/wl1271_softAP/platforms/hw/host_platform_zoom2/linux/host_platform.h
+@@ -59,8 +59,8 @@
+ 
+ 
+ 
+-#define PMENA_GPIO                      101
+-#define IRQ_GPIO                        162
++#define PMENA_GPIO                      160
++#define IRQ_GPIO                        21
+ 
+ #define MUXMODE_3                       3
+ #define TNETW_IRQ                       (OMAP_GPIO_IRQ(IRQ_GPIO))
+diff --git a/wl1271_softAP/stad/build/linux/common.inc b/wl1271_softAP/stad/build/linux/common.inc
+index f0fbc37..ea5e899 100644
+--- a/wl1271_softAP/stad/build/linux/common.inc
++++ b/wl1271_softAP/stad/build/linux/common.inc
+@@ -202,7 +202,7 @@ endif
+ ##
+ ##
+ 
+-EXTRA_CFLAGS += -fsigned-char -Werror
++EXTRA_CFLAGS += -fsigned-char 
+ EXTRA_CFLAGS += -D __LINUX__
+ EXTRA_CFLAGS += $(DK_DEFINES)
+ EXTRA_CFLAGS += $(PFORM_DEFINES)
