@@ -170,7 +170,7 @@ function clean()
 
 function usage()
 {
-  echo "./build.sh [ARGS] (uboot, kernel, android, all)."
+  echo "./build.sh [ARGS] (uboot, kernel, android, boot, rootfs, wl1271, clean, all)."
   exit 0
 }
 
