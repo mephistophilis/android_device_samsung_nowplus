@@ -55,10 +55,14 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_OMAP3 := true
 COMMON_GLOBAL_CFLAGS += -DTARGET_OMAP3 -DOMAP_COMPAT
 
+#recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/nowplus/recovery_ui.c
 BOARD_HAS_SMALL_RECOVERY := false
 BOARD_HAS_LARGE_FILESYSTEM := false
 BOARD_HAS_NO_SELECT_BUTTON := false
+
+#vibrator
+BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/samsung/nowplus/hardware/vibrator/tspdrv.c
 
 #sound
 #BOARD_USES_ALSA_AUDIO := true
