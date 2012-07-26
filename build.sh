@@ -92,7 +92,12 @@ function build_android()
   check_imgdir
   rm -rf ./image/system
   cp -raf ./out/target/product/nowplus/system ./image/
+  check_dir_exist "./image/system/lib/modules/"
+  if [ $? -eq 0 ]; then
+    mkdir ./image/system/lib/modules/
+  fi
   find ./kernel/ -name "*.ko" | xargs -I {} cp {} ./image/system/lib/modules/
+  find ./image/system  -type l  | xargs -I {} rm -f {}
   cp ./hardware/ti/wlan/wl1271/platforms/os/linux/tiwlan_drv.ko ./image/system/etc/wifi/
   cp ./hardware/ti/wlan/wl1271_softAP/platforms/os/linux/tiap_drv.ko ./image/system/etc/wifi/softap/
 }
