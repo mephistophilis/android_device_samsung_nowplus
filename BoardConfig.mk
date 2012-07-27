@@ -61,8 +61,6 @@ BOARD_HAS_SMALL_RECOVERY := false
 BOARD_HAS_LARGE_FILESYSTEM := false
 BOARD_HAS_NO_SELECT_BUTTON := false
 
-#vibrator
-BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/samsung/nowplus/hardware/vibrator/tspdrv.c
 
 #sound
 #BOARD_USES_ALSA_AUDIO := true
