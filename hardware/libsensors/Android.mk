@@ -23,11 +23,11 @@ include $(CLEAR_VARS)
 LOCAL_CFLAGS := -DLOG_TAG=\"Sensors\"
 
 LOCAL_SRC_FILES := 						\
-				sensors.c 			\
-				nusensors.cpp 			\
+				sensors.cpp 			\
 				InputEventReader.cpp		\
 				SensorBase.cpp			\
 				AccelerationSensor.cpp		\
+				ProximitySensor.cpp		\
 				LightSensor.cpp
 
 

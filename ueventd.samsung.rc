@@ -11,12 +11,6 @@
 # logger should be world writable (for logging) but not readable
 /dev/log/*                0662   root       log
 
-# the msm hw3d client device node is world writable/readable.
-/dev/msm_hw3dc            0666   root       root
-
-# gpu driver for adreno200 is globally accessible
-/dev/kgsl                 0666   root       root
-
 # these should not be world writable
 /dev/diag                 0660   radio      radio
 /dev/diag_arm9            0660   radio      radio
@@ -102,8 +96,11 @@
 /dev/video2               0660   system     system
 
 # for Sensor HAL
-/dev/akm8973              0660   system     system
+/dev/fmradio               0777   system     system
 /dev/accelerometer        0660   system     system
+/dev/light_sensor         0770   system     system
+/dev/proximity_sensor     0770   system     system
+
 
 # samsung feature
 /dev/ttyS0                0660   radio       radio
@@ -127,9 +124,4 @@
 /dev/snd/controlC0            0666   audio      audio
 /dev/snd/timer                0666   audio      audio
 
-/dev/fmradio               0777   system     system
-/dev/accel                0770   system     system
-/dev/light_sensor         0770   system     system
-/dev/proximity_sensor     0770   system     system
 /dev/pvrsrvkm             0770   system     system
-

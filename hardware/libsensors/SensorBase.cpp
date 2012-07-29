@@ -36,9 +36,9 @@ SensorBase::SensorBase(
     : dev_name(dev_name), data_name(data_name),
       dev_fd(-1), data_fd(-1)
 {
-
-    data_fd = openInput(data_name);
-
+    if (data_name) {
+        data_fd = openInput(data_name);
+    }
 }
 
 SensorBase::~SensorBase() {
@@ -51,18 +51,14 @@ SensorBase::~SensorBase() {
 }
 
 int SensorBase::open_device() {
-
     if (dev_fd<0 && dev_name) {
         dev_fd = open(dev_name, O_RDONLY);
-		if(dev_fd<0)
-        	LOGE("Couldn't open %s (%s)", dev_name, strerror(errno));
+        LOGE_IF(dev_fd<0, "Couldn't open %s (%s)", dev_name, strerror(errno));
     }
-
     return 0;
 }
 
 int SensorBase::close_device() {
-
     if (dev_fd >= 0) {
         close(dev_fd);
         dev_fd = -1;
@@ -71,17 +67,17 @@ int SensorBase::close_device() {
 }
 
 int SensorBase::getFd() const {
-
+    if (!data_name) {
+        return dev_fd;
+    }
     return data_fd;
 }
 
 int SensorBase::setDelay(int32_t handle, int64_t ns) {
-
     return 0;
 }
 
 bool SensorBase::hasPendingEvents() const {
-
     return false;
 }
 
@@ -93,7 +89,6 @@ int64_t SensorBase::getTimestamp() {
 }
 
 int SensorBase::openInput(const char* inputName) {
-
     int fd = -1;
     const char *dirname = "/dev/input";
     char devname[PATH_MAX];
@@ -119,6 +114,7 @@ int SensorBase::openInput(const char* inputName) {
                 name[0] = '\0';
             }
             if (!strcmp(name, inputName)) {
+                strcpy(input_name, filename);
                 break;
             } else {
                 close(fd);
@@ -127,8 +123,6 @@ int SensorBase::openInput(const char* inputName) {
         }
     }
     closedir(dir);
-
-	if(fd<0)
-    	LOGE("couldn't find '%s' input device", inputName);
+    LOGE_IF(fd<0, "couldn't find '%s' input device", inputName);
     return fd;
 }

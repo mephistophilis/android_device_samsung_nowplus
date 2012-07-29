@@ -67,12 +67,13 @@ AccelerationSensor::AccelerationSensor()
     mPendingEvent.version = sizeof(sensors_event_t);
     mPendingEvent.sensor = ID_A;
     mPendingEvent.type = SENSOR_TYPE_ACCELEROMETER;
-    mPendingEvent.acceleration.status = SENSOR_STATUS_ACCURACY_HIGH;
+    mPendingEvent.acceleration.status = SENSOR_STATUS_ACCURACY_LOW;
     memset(mPendingEvent.data, 0x00, sizeof(mPendingEvent.data));
 
+#if 0
     open_device();
 
-    int flags = ONLYACCEL;
+    int flags = 0;
     if (ioctl(dev_fd, KXSD9_IOC_SET_MODE, &flags)>0) {
         if (flags)  {
             mEnabled = 1;
@@ -81,7 +82,7 @@ AccelerationSensor::AccelerationSensor()
     if (!mEnabled) {
         close_device();
     }
-
+#endif
 }
 
 AccelerationSensor::~AccelerationSensor() {
@@ -89,6 +90,7 @@ AccelerationSensor::~AccelerationSensor() {
 
 int AccelerationSensor::enable(int32_t, int en)
 {
+
     int flags = en ? 1 : 0;
     int err = 0;
 
@@ -107,12 +109,13 @@ int AccelerationSensor::enable(int32_t, int en)
         err = ioctl(dev_fd, KXSD9_IOC_SET_MODE, &flags);
         err = err<0 ? -errno : 0;
 
-		if(err)
+	if(err)
         	LOGE("KXSD9_IOC_SET_MODE failed (%s)", strerror(-err));
-        if (err > 0) {
+        if (err == 0) {
             mEnabled = flags;
         }
         if (!flags) {
+        
             close_device();
         }
     }
@@ -139,14 +142,13 @@ int AccelerationSensor::enableOrientation(int en)
 
         err = ioctl(dev_fd, KXSD9_IOC_SET_MODE, &flags);
         err = err<0 ? -errno : 0;
-		if(err)
-        LOGE("KXSD9_IOC_SET_MODE failed (%s)", strerror(-err));
-        if (err > 0) {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
+	if(err)
+                LOGE("KXSD9_IOC_SET_MODE failed (%s)", strerror(-err));
+        if (err == 0) {
             mOrientationEnabled = flags;
         }
         if (!flags) {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
+
             close_device();
         }
     }
@@ -157,13 +159,15 @@ int AccelerationSensor::setDelay(int32_t handle, int64_t ns)
 {
 
     if (ns < 0)
+    {
+        LOGE("%s:%d", __FUNCTION__,__LINE__);
         return -EINVAL;
-
+    }
     if (mEnabled || mOrientationEnabled) {
 
         int delay = ns / 1000000;
         if (ioctl(dev_fd, KXSD9_IOC_SET_DELAY, &delay)>0) {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
+    LOGE("%s:%d, errno %d", __FUNCTION__,__LINE__,-errno);
             return -errno;
         }
 
@@ -173,25 +177,27 @@ LOGE("%s : %d ", __FUNCTION__, __LINE__);
 
 int AccelerationSensor::readEvents(sensors_event_t* data, int count)
 {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
     if (count < 1)
+    {
         return -EINVAL;
+    }   
 
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
     ssize_t n = mInputReader.fill(data_fd);
     if (n < 0)
+    {
         return n;
+    }
     int numEventReceived = 0;
     input_event const* event;
 
     while (count && mInputReader.readEvent(&event)) {
         int type = event->type;
-        if (type == EV_REL) {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
+        if (type == EV_ABS) {
+
             processEvent(event->code, event->value);
 
         } else if (type == EV_SYN) {
-LOGE("%s : %d ", __FUNCTION__, __LINE__);
+
             int64_t time = timevalToNano(event->time);
             mPendingEvent.timestamp = time;
             if (mEnabled) {
@@ -208,21 +214,20 @@ LOGE("%s : %d ", __FUNCTION__, __LINE__);
         mInputReader.next();
 
     }
-
     return numEventReceived;
 }
 
 void AccelerationSensor::processEvent(int code, int value)
-{LOGE("%s : %d ", __FUNCTION__, __LINE__);
+{
     switch (code) {
         case EVENT_TYPE_ACCEL_X:
-            mPendingEvent.acceleration.x = value * CONVERT_A_X;
+            mPendingEvent.acceleration.x = -((value -2048 ) /81.9);//* CONVERT_A_X;value * CONVERT_A_X;
             break;
         case EVENT_TYPE_ACCEL_Y:
-            mPendingEvent.acceleration.y = value * CONVERT_A_Y;
+            mPendingEvent.acceleration.y = -((value -2048 ) /81.9);//* CONVERT_A_X;value * CONVERT_A_Y;
             break;
         case EVENT_TYPE_ACCEL_Z:
-            mPendingEvent.acceleration.z = value * CONVERT_A_Z;
+            mPendingEvent.acceleration.z = ((value -2048 ) /81.9);//* CONVERT_A_X;value * CONVERT_A_Z;
             break;
     }
 }

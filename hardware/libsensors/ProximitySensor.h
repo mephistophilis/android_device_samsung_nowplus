@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_LIGHT_SENSOR_H
-#define ANDROID_LIGHT_SENSOR_H
+#ifndef ANDROID_PROXIMITY_SENSOR_H
+#define ANDROID_PROXIMITY_SENSOR_H
 
 #include <stdint.h>
 #include <errno.h>
@@ -30,9 +30,8 @@
 
 struct input_event;
 
-class LightSensor : public SensorBase {
+class ProximitySensor : public SensorBase {
     int mEnabled;
-    int mEventsSinceEnable;
     InputEventCircularReader mInputReader;
     sensors_event_t mPendingEvent;
     bool mHasPendingEvent;
@@ -40,18 +39,16 @@ class LightSensor : public SensorBase {
     int input_sysfs_path_len;
 
     int setInitialState();
-    float mPreviousLight;
     float indexToValue(size_t index) const;
 
 public:
-            LightSensor();
-    virtual ~LightSensor();
+            ProximitySensor();
+    virtual ~ProximitySensor();
     virtual int readEvents(sensors_event_t* data, int count);
     virtual bool hasPendingEvents() const;
-    virtual int setDelay(int32_t handle, int64_t ns);
     virtual int enable(int32_t handle, int enabled);
 };
 
 /*****************************************************************************/
 
-#endif  // ANDROID_LIGHT_SENSOR_H
+#endif  // ANDROID_PROXIMITY_SENSOR_H

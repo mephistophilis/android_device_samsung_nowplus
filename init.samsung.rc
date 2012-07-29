@@ -4,9 +4,8 @@ on early-init
 on init
 
 sysclktz 0
-
 loglevel 3
-
+    
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
@@ -151,7 +150,7 @@ on fs
     insmod /system/lib/modules/dpram.ko
     insmod /system/lib/modules/kxsd9.ko
     insmod /system/lib/modules/vibetonz.ko
-    insmod /system/lib/modules/pl_sensor.ko
+    insmod /system/lib/modules/PL_sensor.ko
     insmod /system/lib/modules/Si4709_driver.ko
     insmod /system/lib/modules/multipdp.ko
 

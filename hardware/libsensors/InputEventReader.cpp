@@ -48,7 +48,6 @@ InputEventCircularReader::~InputEventCircularReader()
 
 ssize_t InputEventCircularReader::fill(int fd)
 {
-
     size_t numEventsRead = 0;
     if (mFreeSpace) {
         const ssize_t nread = read(fd, mHead, mFreeSpace * sizeof(input_event));
@@ -74,20 +73,16 @@ ssize_t InputEventCircularReader::fill(int fd)
 
 ssize_t InputEventCircularReader::readEvent(input_event const** events)
 {
-
     *events = mCurr;
     ssize_t available = (mBufferEnd - mBuffer) - mFreeSpace;
-
     return available ? 1 : 0;
 }
 
 void InputEventCircularReader::next()
 {
-
     mCurr++;
     mFreeSpace++;
     if (mCurr >= mBufferEnd) {
         mCurr = mBuffer;
     }
-
 }
