@@ -42,8 +42,6 @@ function build_kernel()
   export CROSS_COMPILE="../prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin/arm-eabi-"
   make omap_nowplus_defconfig
   make -j4
-  export KDIR=`pwd`
-  make -C ./modules
   cd -
 }
 
@@ -136,6 +134,7 @@ function build_boot()
   new='CONFIG_INITRAMFS_SOURCE="../out/target/product/nowplus/recovery/root"\nCONFIG_INITRAMFS_ROOT_UID=0\nCONFIG_INITRAMFS_ROOT_GID=0\nCONFIG_INITRAMFS_COMPRESSION_NONE=y\n# CONFIG_INITRAMFS_COMPRESSION_GZIP is not set'
   sed -i "s|$old|$new|g" ./.config
   make uImage -j4
+  make omap_nowplus_defconfig
   cd -
   check_imgdir
   cp ./kernel/arch/arm/boot/uImage ./image/recovery.img
@@ -159,6 +158,7 @@ function build_rootfs()
   new='CONFIG_INITRAMFS_SOURCE="../out/target/product/nowplus/root"\nCONFIG_INITRAMFS_ROOT_UID=0\nCONFIG_INITRAMFS_ROOT_GID=0\nCONFIG_INITRAMFS_COMPRESSION_NONE=y\n# CONFIG_INITRAMFS_COMPRESSION_GZIP is not set'
   sed -i "s|$old|$new|g" ./.config
   make uImage -j4
+  make omap_nowplus_defconfig
   cd -
   check_imgdir
   cp ./kernel/arch/arm/boot/uImage ./image/boot.img

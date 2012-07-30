@@ -171,10 +171,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/nowplus/prebuilt/csc/isnew_csc.txt:system/csc/isnew_csc.txt \
     device/samsung/nowplus/prebuilt/csc/others.xml:system/csc/others.xml
     
-# kernel modules
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,device/samsung/nowplus/prebuilt/modules,system/lib/modules)
-
 TARGET_PREBUILT_KERNEL := kernel/arch/arm/boot/zImage
 
 ifneq ($(TARGET_PREBUILT_KERNEL),)
