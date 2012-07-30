@@ -139,22 +139,6 @@ on fs
     mount yaffs2 mtd@userdata /data nosuid nodev noatime nodiratime
     mount yaffs2 mtd@cache /cache nosuid nodev noatime nodiratime
 
-    
-# load camera modules
-    insmod /system/lib/modules/cam_pmic.ko
-    insmod /system/lib/modules/main_sensor.ko
-    insmod /system/lib/modules/vt_sensor.ko
-
-# additional kernel modules
-    insmod /system/lib/modules/param.ko
-    insmod /system/lib/modules/dpram.ko
-    insmod /system/lib/modules/kxsd9.ko
-    insmod /system/lib/modules/vibetonz.ko
-    insmod /system/lib/modules/PL_sensor.ko
-    insmod /system/lib/modules/Si4709_driver.ko
-    insmod /system/lib/modules/multipdp.ko
-
-
 on post-fs
     mount rootfs rootfs / rw remount
 
