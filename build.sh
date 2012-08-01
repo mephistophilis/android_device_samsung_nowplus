@@ -136,8 +136,6 @@ function build_boot()
   make uImage -j4
   make omap_nowplus_defconfig
   cd -
-  check_imgdir
-  cp ./kernel/arch/arm/boot/uImage ./image/recovery.img
   make_boot
 }
 
