@@ -57,9 +57,6 @@ COMMON_GLOBAL_CFLAGS += -DTARGET_OMAP3 -DOMAP_COMPAT
 
 #recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/nowplus/recovery_ui.c
-BOARD_HAS_SMALL_RECOVERY := false
-BOARD_HAS_LARGE_FILESYSTEM := false
-BOARD_HAS_NO_SELECT_BUTTON := false
 
 
 #sound

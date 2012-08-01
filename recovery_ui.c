@@ -64,13 +64,20 @@ int device_handle_key(int key_code, int visible) {
 
             case KEY_PHONE:
                 return SELECT_ITEM;
+
+            case KEY_POWER:
+                if (ui_get_showing_back_button()) {
+                    return SELECT_ITEM;
+                }
+                if (!get_allow_toggle_display())
+				{
+                    return GO_BACK;
+				}
+                break;
             
             case KEY_EXIT:
-            case KEY_SEARCH:
-                if (ui_get_showing_back_button())
-                    return SELECT_ITEM;
-                if (!get_allow_toggle_display())
-                    return GO_BACK;
+			case KEY_SEARCH:
+				return GO_BACK;
         }
     }
 
